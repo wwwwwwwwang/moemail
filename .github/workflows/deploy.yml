@@ -38,10 +38,10 @@ jobs:
         run: pnpm exec wrangler -h
 
       - name: Update Wrangler to latest version
-        run: pnpm add -D wrangler@latest  # 强制更新 wrangler 到最新版本
+        run: pnpm add -D wrangler@latest
 
       - name: Check Wrangler Version after update
-        run: pnpm exec wrangler --version  # 确保更新后的版本
+        run: pnpm exec wrangler --version
 
       - name: Run deploy script with debug info
         env:
