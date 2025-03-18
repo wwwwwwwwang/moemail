@@ -33,7 +33,12 @@ jobs:
           cache: 'pnpm'
 
       - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
+        run: |
+          pnpm add -D wrangler@latest  # 确保使用最新的 Wrangler
+          pnpm install --frozen-lockfile
+
+      - name: Check Wrangler Version
+        run: npx wrangler -V  # 检查 Wrangler 版本
 
       - name: Run deploy script
         env:
