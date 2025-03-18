@@ -37,6 +37,12 @@ jobs:
       - name: Debug Wrangler Version
         run: pnpm exec wrangler -h
 
+      - name: Update Wrangler to latest version
+        run: pnpm add -D wrangler@latest  # 强制更新 wrangler 到最新版本
+
+      - name: Check Wrangler Version after update
+        run: pnpm exec wrangler --version  # 确保更新后的版本
+
       - name: Run deploy script
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
