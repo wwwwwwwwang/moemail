@@ -26,12 +26,13 @@ jobs:
           cache: 'pnpm'
 
       - name: Install Dependencies
-        run: |
-          pnpm add -D wrangler@latest  # 更新 Wrangler
-          pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
+
+      - name: Ensure Wrangler is available
+        run: pnpm exec wrangler --version
 
       - name: Check Wrangler Version
-        run: npx wrangler --version  # 确保 Wrangler 版本正确
+        run: npx wrangler --version
 
       - name: Run deploy script
         env:
@@ -46,7 +47,7 @@ jobs:
           AUTH_GITHUB_ID: ${{ secrets.AUTH_GITHUB_ID }}
           AUTH_GITHUB_SECRET: ${{ secrets.AUTH_GITHUB_SECRET }}
           AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
-        run: pnpm dlx tsx scripts/deploy/index.ts
+        run: pnpm exec tsx scripts/deploy/index.ts
 
       - name: Post deployment cleanup
         run: |
