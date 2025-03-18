@@ -12,14 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Get full git history for checking file changes
-
-      - name: Get previous tag
-        id: previoustag
-        if: github.event_name == 'push'
-        run: |
-          echo "tag=$(git describe --tags --abbrev=0 HEAD^)" >> $GITHUB_OUTPUT
-        continue-on-error: true
+          fetch-depth: 0
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
@@ -34,11 +27,11 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pnpm add -D wrangler@latest  # 确保使用最新的 Wrangler
+          pnpm add -D wrangler@latest  # 更新 Wrangler
           pnpm install --frozen-lockfile
 
       - name: Check Wrangler Version
-        run: npx wrangler -V  # 检查 Wrangler 版本
+        run: npx wrangler --version  # 确保 Wrangler 版本正确
 
       - name: Run deploy script
         env:
@@ -55,7 +48,6 @@ jobs:
           AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
         run: pnpm dlx tsx scripts/deploy/index.ts
 
-      # Clean up
       - name: Post deployment cleanup
         run: |
           rm -f .env*.*
